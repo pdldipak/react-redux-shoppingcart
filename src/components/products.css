@@ -9,14 +9,13 @@
     list-style-type: none;
   }
   .products li {
-    flex: 0 1 29rem;
+    flex: 0 1 1;
     height: 47rem;
-    padding: 1rem;
+    padding: 2rem;
   }
   .product {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     height: 100%;
   }
   .product img {
@@ -25,14 +24,11 @@
   }
   .product-price {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
   }
-  .product-price div,
-  .product-price button {
-    text-align: center;
-    flex: 1;
-  }
+
   .product-price div {
     font-size: 2rem;
   }

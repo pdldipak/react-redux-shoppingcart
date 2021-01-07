@@ -2,7 +2,7 @@ import React from 'react';
 import formatCurrency from '../util';
 import './products.css'
 
-function Products({ products }) {
+function Products({ products, setProducts }) {
   return (
     <div>
       <ul className='products'>
@@ -10,7 +10,9 @@ function Products({ products }) {
           <li key={product._id}>
             <div className='product'>
               <a href={'#' + product._id}>
-                <img src={product.image} alt={product.title}></img>
+                <div className="image-container">
+                  <img src={product.image} alt={product.title}></img>
+                  </div>
                 <p>{product.title}</p>
               </a>
               <div className="product-price">
@@ -23,7 +25,7 @@ function Products({ products }) {
                       </button>
               </div>
             </div>
-            <br/>
+            
           </li>
         ))}
       </ul>
