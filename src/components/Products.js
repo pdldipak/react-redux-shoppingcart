@@ -1,8 +1,8 @@
 import React from 'react';
 import formatCurrency from '../util';
-import './products.css'
+import './products.css';
 
-function Products({ products, setProducts }) {
+function Products({ products, setProducts, addToCart }) {
   return (
     <div>
       <ul className='products'>
@@ -10,22 +10,18 @@ function Products({ products, setProducts }) {
           <li key={product._id}>
             <div className='product'>
               <a href={'#' + product._id}>
-                <div className="image-container">
+                <div className='image-container'>
                   <img src={product.image} alt={product.title}></img>
-                  </div>
+                </div>
                 <p>{product.title}</p>
               </a>
-              <div className="product-price">
-                      <div>{formatCurrency(product.price)}</div>
-                      <button
-        
-                        className="button-primary"
-                      >
-                        Add To Cart
-                      </button>
+              <div className='product-price'>
+                <div>{formatCurrency(product.price)}</div>
+                <button className='button-primary' onClick={() => addToCart( product)}>
+                  Add To Cart
+                </button>
               </div>
             </div>
-            
           </li>
         ))}
       </ul>

@@ -3,11 +3,38 @@ import Products from './components/Products';
 import data from './data.json';
 import './app.css';
 import Filter from './components/Filter';
+import Cart from './components/Cart';
 
 function App() {
   const [products, setProduct] = useState(data.products);
   const [size, setSize] = useState('');
   const [order, setOrder] = useState('');
+  const [cartItems, setCartItems] = useState([]);
+  // const [count, setCount] = useState(1);
+
+  const removeFromCart = (product) => {
+    setCartItems((cartItems) =>
+      cartItems.filter((item) => item._id !== product._id)
+    );
+  };
+
+  const addToCart = (product) => {
+    const newCartItems = cartItems.slice();
+    let alreadyInCart = false;
+    newCartItems.forEach((item) => {
+      if (item._id === product._id) {
+       // setCount(item.count++ );
+       item.count++ 
+        alreadyInCart = true;
+      }
+    });
+    if (!alreadyInCart) {
+      newCartItems.push({...product, count:1})
+      
+    }
+    setCartItems(newCartItems)
+  }; 
+
 
   const sortByOrder = (e) => {
     e.preventDefault();
@@ -36,7 +63,7 @@ function App() {
     e.preventDefault();
     console.log('Size-', e.target.value);
     if (e.target.value === '') {
-      setProduct(() => data.products);
+      setProduct(() => products);
       setSize(() => e.target.value);
     } else {
       setSize(() => e.target.value);
@@ -64,9 +91,14 @@ function App() {
               sortByOrder={sortByOrder}
               order={order}
             />
-            <Products products={products} />
+            <Products products={products} addToCart={addToCart} />
           </div>
-          <div className='sidebar'>cart name</div>
+          <div className='sidebar'>
+            <Cart
+              cartItems={cartItems}
+              removeFromCart={removeFromCart}
+            />
+          </div>
         </div>
       </main>
       <footer>All right are preserved</footer>
