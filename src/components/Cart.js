@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Fade from 'react-reveal/Fade';
 import formatCurrency from '../util';
 import './cart.css';
 
@@ -15,9 +16,9 @@ function Cart({ cartItems, removeFromCart, createOrder }) {
       name: name,
       email: email,
       address: address,
-      cartItems:cartItems,
+      cartItems: cartItems,
     };
-  createOrder(order)
+    createOrder(order);
   };
   return (
     <div>
@@ -29,27 +30,29 @@ function Cart({ cartItems, removeFromCart, createOrder }) {
         </div>
       )}
       <div className='cart'>
-        <ul className='cart-items'>
-          {cartItems.map((item) => (
-            <li key={item._id}>
-              <div>
-                <img src={item.image} alt={item.title}></img>
-              </div>
-              <div>
-                <div>{item.title}</div>
-                <div className='right'>
-                  {formatCurrency(item.price)} x {item.count}{' '}
-                  <button
-                    className='button'
-                    onClick={() => removeFromCart(item)}
-                  >
-                    Remove
-                  </button>
+        <Fade left cascade={true}>
+          <ul className='cart-items'>
+            {cartItems.map((item) => (
+              <li key={item._id}>
+                <div>
+                  <img src={item.image} alt={item.title}></img>
                 </div>
-              </div>
-            </li>
-          ))}
-        </ul>
+                <div>
+                  <div>{item.title}</div>
+                  <div className='right'>
+                    {formatCurrency(item.price)} x {item.count}{' '}
+                    <button
+                      className='button'
+                      onClick={() => removeFromCart(item)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </Fade>
       </div>
       {cartItems.length !== 0 && (
         <div className='cart'>
@@ -70,49 +73,49 @@ function Cart({ cartItems, removeFromCart, createOrder }) {
         </div>
       )}
       {showCheckout && (
-        // <Fade right cascade>
-        <div className='cart'>
-          <form onSubmit={handleOrder}>
-            <ul className='form-container'>
-              <li>
-                <label>Email</label>
-                <input
-                  name='email'
-                  type='email'
-                  value={email}
-                  required
-                  onChange={(e) => setEmail(e.target.value)}
-                ></input>
-              </li>
-              <li>
-                <label>Name</label>
-                <input
-                  name='name'
-                  value={name}
-                  type='text'
-                  required
-                  onChange={(e) => setName(e.target.value)}
-                ></input>
-              </li>
-              <li>
-                <label>Address</label>
-                <input
-                  name='address'
-                  type='text'
-                  value={address}
-                  required
-                  onChange={(e) => setAddress(e.target.value)}
-                ></input>
-              </li>
-              <li>
-                <button className='button primary' type='submit'>
-                  Checkout
-                </button>
-              </li>
-            </ul>
-          </form>
-        </div>
-        // </Fade>
+        <Fade right cascade={true}>
+          <div className='cart'>
+            <form onSubmit={handleOrder}>
+              <ul className='form-container'>
+                <li>
+                  <label>Email</label>
+                  <input
+                    name='email'
+                    type='email'
+                    value={email}
+                    required
+                    onChange={(e) => setEmail(e.target.value)}
+                  ></input>
+                </li>
+                <li>
+                  <label>Name</label>
+                  <input
+                    name='name'
+                    value={name}
+                    type='text'
+                    required
+                    onChange={(e) => setName(e.target.value)}
+                  ></input>
+                </li>
+                <li>
+                  <label>Address</label>
+                  <input
+                    name='address'
+                    type='text'
+                    value={address}
+                    required
+                    onChange={(e) => setAddress(e.target.value)}
+                  ></input>
+                </li>
+                <li>
+                  <button className='button primary' type='submit'>
+                    Checkout
+                  </button>
+                </li>
+              </ul>
+            </form>
+          </div>
+        </Fade>
       )}
     </div>
   );
