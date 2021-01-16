@@ -15,6 +15,7 @@ function Cart({ cartItems, removeFromCart, createOrder }) {
       name: name,
       email: email,
       address: address,
+      cartItems:cartItems,
     };
   createOrder(order)
   };
