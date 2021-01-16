@@ -45,7 +45,7 @@ function App() {
   };
 
   const createOrder = (order) => {
-    alert('Need to save order for' + JSON.stringify(order))
+    alert('Need to save order for' + JSON.stringify(order.name))
   }
   const sortByOrder = (e) => {
     e.preventDefault();
