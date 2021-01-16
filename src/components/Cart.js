@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import formatCurrency from '../util';
 import './cart.css';
 
-function Cart({ cartItems, removeFromCart }) {
-  console.log('cartItems-', cartItems);
+function Cart({ cartItems, removeFromCart, createOrder }) {
+  //console.log('cartItems-', cartItems);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
 
+  const handleOrder = (e) => {
+    e.preventDefault();
+    const order = {
+      name: name,
+      email: email,
+      address: address,
+    };
+  createOrder(order)
+  };
   return (
     <div>
       {cartItems.length === 0 ? (
@@ -46,9 +59,59 @@ function Cart({ cartItems, removeFromCart }) {
                 cartItems.reduce((a, c) => a + c.price * c.count, 0)
               )}
             </div>
-            <button className='button primary'>Proceed</button>
+            <button
+              onClick={() => setShowCheckout({ showCheckout: true })}
+              className='button primary'
+            >
+              Proceed
+            </button>
           </div>
         </div>
+      )}
+      {showCheckout && (
+        // <Fade right cascade>
+        <div className='cart'>
+          <form onSubmit={handleOrder}>
+            <ul className='form-container'>
+              <li>
+                <label>Email</label>
+                <input
+                  name='email'
+                  type='email'
+                  value={email}
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
+                ></input>
+              </li>
+              <li>
+                <label>Name</label>
+                <input
+                  name='name'
+                  value={name}
+                  type='text'
+                  required
+                  onChange={(e) => setName(e.target.value)}
+                ></input>
+              </li>
+              <li>
+                <label>Address</label>
+                <input
+                  name='address'
+                  type='text'
+                  value={address}
+                  required
+                  onChange={(e) => setAddress(e.target.value)}
+                ></input>
+              </li>
+              <li>
+                <button className='button primary' type='submit'>
+                  Checkout
+                </button>
+              </li>
+            </ul>
+          </form>
+        </div>
+        // </Fade>
       )}
     </div>
   );

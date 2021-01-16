@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Products from './components/Products';
 import data from './data.json';
 import './app.css';
@@ -9,13 +9,19 @@ function App() {
   const [products, setProduct] = useState(data.products);
   const [size, setSize] = useState('');
   const [order, setOrder] = useState('');
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(JSON.parse(localStorage.getItem('newCartItems')) ?
+    JSON.parse(localStorage.getItem('newCartItems')) : []
+  );
   // const [count, setCount] = useState(1);
+  useEffect(() => {
+    localStorage.setItem('newCartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const removeFromCart = (product) => {
     setCartItems((cartItems) =>
       cartItems.filter((item) => item._id !== product._id)
     );
+    localStorage.setItem('newCartItems', JSON.stringify(cartItems));
   };
 
   const addToCart = (product) => {
@@ -23,19 +29,24 @@ function App() {
     let alreadyInCart = false;
     newCartItems.forEach((item) => {
       if (item._id === product._id) {
-       // setCount(item.count++ );
-       item.count++ 
+        // setCount(item.count++ );
+        item.count++;
         alreadyInCart = true;
       }
     });
     if (!alreadyInCart) {
-      newCartItems.push({...product, count:1})
-      
+      newCartItems.push({ ...product, count: 1 });
     }
-    setCartItems(newCartItems)
-  }; 
+    setCartItems(newCartItems);
+    localStorage.setItem(
+      'newCartItems',
+      JSON.stringify(newCartItems)
+    );
+  };
 
-
+  const createOrder = (order) => {
+    alert('Need to save order for' + JSON.stringify(order))
+  }
   const sortByOrder = (e) => {
     e.preventDefault();
     //  console.log('order-', e.target.value)
@@ -97,6 +108,7 @@ function App() {
             <Cart
               cartItems={cartItems}
               removeFromCart={removeFromCart}
+              createOrder={createOrder}
             />
           </div>
         </div>
