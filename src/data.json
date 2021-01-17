@@ -19,10 +19,10 @@
       {
         "_id": "dress3",
         "image": "/images/dress3.jpg",
-        "title": "American Cap",
+        "title": "Winter overall for kid",
         "description": "This is for all the latest trends, no matter who you are, where you’re from and what you’re up to. Exclusive to ASOS, our universal brand is here for you, and comes in all our fit ranges: ASOS Curve, Tall, Petite and Maternity. Created by us, styled by you.",
         "availableSizes": ["X", "M", "L"],
-        "price": 14.9
+        "price": 18.9
       },
       {
         "_id": "dress4",
