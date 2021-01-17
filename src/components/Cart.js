@@ -72,7 +72,7 @@ function Cart({ cartItems, removeFromCart, createOrder }) {
           </div>
         </div>
       )}
-      {showCheckout && (
+      {cartItems.length !== 0 && showCheckout && (
         <Fade right cascade={true}>
           <div className='cart'>
             <form onSubmit={handleOrder}>
