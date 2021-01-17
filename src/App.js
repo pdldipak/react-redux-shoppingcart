@@ -4,9 +4,13 @@ import data from './data.json';
 import './app.css';
 import Filter from './components/Filter';
 import Cart from './components/Cart';
+//redux part
+import store from './redux/store'
+import { Provider } from 'react-redux';
+
 
 function App() {
-  const [products, setProduct] = useState(data.products);
+  const [products, setProduct] = useState(data);
   const [size, setSize] = useState('');
   const [order, setOrder] = useState('');
   const [cartItems, setCartItems] = useState(JSON.parse(localStorage.getItem('newCartItems')) ?
@@ -88,6 +92,7 @@ function App() {
   };
 
   return (
+    <Provider store={store}>
     <div className='grid-container'>
       <header>
         <a href='/'>React Shopping card</a>
@@ -114,7 +119,8 @@ function App() {
         </div>
       </main>
       <footer>All right are preserved</footer>
-    </div>
+      </div>
+      </Provider>
   );
 }
 
