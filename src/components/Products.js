@@ -8,12 +8,12 @@ import { fetchProducts } from '../redux/actions/productAction';
 
 function Products({ products, addToCart }) {
   const [product, setProduct] = useState(null);
- // const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   fetchProducts();
-  //  // setLoading(true)
-  // }, []);
+  useEffect(() => {
+    fetchProducts();
+    // setLoading(true);
+  }, []);
 
   const openModal = (product) => {
     setProduct(product);
@@ -24,39 +24,40 @@ function Products({ products, addToCart }) {
   return (
     <div>
       <Fade bottom cascade={true}>
-        { !products ? (
-          <h4 className='text-danger'>Loading.....</h4>
+        {/* {loading ? ( */}
+        {!products ? (
+          <h4 style={{ color: 'red' }}>Loading.....</h4>
         ) : (
-            <ul className='products'>
-              {products.map((product) => (
-                <li key={product._id}>
-                  <div className='product'>
-                    <a
-                      href={'#' + product._id}
-                      onClick={() => openModal(product)}
-                    >
-                      <div className='image-container'>
-                        <img
-                          src={product.image}
-                          alt={product.title}
-                        ></img>
-                      </div>
-                      <p>{product.title}</p>
-                    </a>
-                    <div className='product-price'>
-                      <div>{formatCurrency(product.price)}</div>
-                      <button
-                        className='button-primary'
-                        onClick={() => addToCart(product)}
-                      >
-                        Add To Cart
-                  </button>
+          <ul className='products'>
+            {products.map((product) => (
+              <li key={product._id}>
+                <div className='product'>
+                  <a
+                    href={'#' + product._id}
+                    onClick={() => openModal(product)}
+                  >
+                    <div className='image-container'>
+                      <img
+                        src={product.image}
+                        alt={product.title}
+                      ></img>
                     </div>
+                    <p>{product.title}</p>
+                  </a>
+                  <div className='product-price'>
+                    <div>{formatCurrency(product.price)}</div>
+                    <button
+                      className='button-primary'
+                      onClick={() => addToCart(product)}
+                    >
+                      Add To Cart
+                    </button>
                   </div>
-                </li>
-              ))}
-            </ul>
-          )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </Fade>
       {product && (
         <Modal isOpen={true} onRequestClose={closeModal}>
@@ -100,10 +101,19 @@ function Products({ products, addToCart }) {
     </div>
   );
 }
-const mapStateToProps = (state) => {
-  return {
-    products: state.products.items,
-  };
-};
 
-export default connect(mapStateToProps, {fetchProducts})(Products);
+export default connect(
+  (state) => ({ products: state.products.items }),
+  fetchProducts
+)(Products);
+
+// const mapStateToProps = (state) => ({
+//   products: state.products.items,
+// });
+
+// const mapDispatchToProps = (dispatch)=>({fetchProducts:()=>dispatch(fetchProducts())})
+
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(Products);

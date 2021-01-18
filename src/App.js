@@ -4,13 +4,12 @@ import data from './data.json';
 import './app.css';
 import Filter from './components/Filter';
 import Cart from './components/Cart';
-//redux part
 import store from './redux/store'
 import { Provider } from 'react-redux';
 
 
 function App() {
-  const [products, setProduct] = useState(data);
+  const [products, setProduct] = useState(data.products);
   const [size, setSize] = useState('');
   const [order, setOrder] = useState('');
   const [cartItems, setCartItems] = useState(JSON.parse(localStorage.getItem('newCartItems')) ?
