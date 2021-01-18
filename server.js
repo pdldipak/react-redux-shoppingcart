@@ -9,7 +9,7 @@ const app = express();
 
 //apply middlewares
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json({ limit: '2mb' }));
+app.use(bodyParser.json());
 app.use(cors());
 
 //conect to mongoDB
@@ -58,7 +58,7 @@ app.delete('/api/products/:id', async (req, res) => {
 });
 
 // port
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 app.listen(port, () =>
   console.log(`Server is running on port ${port}`)
 );
