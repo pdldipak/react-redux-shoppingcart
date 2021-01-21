@@ -1,12 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import {
   filterProducts,
   sortProducts,
 } from '../redux/actions/productAction';
+import { useSelector, useDispatch } from 'react-redux';
 import './filter.css';
 
-function Filter({ products, sort, size, filteredProducts }) {
+function Filter() {
+  const filteredProducts = useSelector(
+    (state) => state.products.filteredItems
+  );
+  const sort = useSelector((state) => state.products.sort);
+  const size = useSelector((state) => state.products.size);
+  const products = useSelector((state) => state.products.items);
+  const dispatch = useDispatch();
   return (
     <>
       {!filteredProducts ? (
@@ -21,7 +28,9 @@ function Filter({ products, sort, size, filteredProducts }) {
             <select
               value={sort}
               onChange={(e) =>
-                sortProducts(filteredProducts, e.target.value)
+                dispatch(
+                  sortProducts(filteredProducts, e.target.value)
+                )
               }
             >
               <option value='latest'>Latest</option>
@@ -34,7 +43,7 @@ function Filter({ products, sort, size, filteredProducts }) {
             <select
               value={size}
               onChange={(e) =>
-                filterProducts(products, e.target.value)
+                dispatch(filterProducts(products, e.target.value))
               }
             >
               <option value=''>ALL</option>
@@ -52,15 +61,4 @@ function Filter({ products, sort, size, filteredProducts }) {
   );
 }
 
-export default connect(
-  (state) => ({
-    size: state.products.size,
-    sort: state.products.sort,
-    products: state.products.items,
-    filteredProducts: state.products.filteredItems,
-  }),
-  {
-    filterProducts,
-    sortProducts,
-  }
-)(Filter);
+export default Filter;

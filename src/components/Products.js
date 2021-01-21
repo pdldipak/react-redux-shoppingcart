@@ -3,16 +3,18 @@ import { Fade, Zoom } from 'react-reveal';
 import Modal from 'react-modal';
 import formatCurrency from '../util';
 import './products.css';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts } from '../redux/actions/productAction';
 
-function Products({ products, addToCart }) {
+function Products({ addToCart }) {
   const [product, setProduct] = useState(null);
-  // const [loading, setLoading] = useState(false);
+  const products = useSelector(
+    (state) => state.products.filteredItems
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchProducts();
-    // setLoading(true);
+    dispatch(fetchProducts());
   }, []);
 
   const openModal = (product) => {
@@ -24,7 +26,6 @@ function Products({ products, addToCart }) {
   return (
     <div>
       <Fade bottom cascade={true}>
-        {/* {loading ? ( */}
         {!products ? (
           <h4 style={{ color: 'red' }}>Loading.....</h4>
         ) : (
@@ -102,18 +103,4 @@ function Products({ products, addToCart }) {
   );
 }
 
-export default connect(
-  (state) => ({ products: state.products.filteredItems }),
-  fetchProducts
-)(Products);
-
-// const mapStateToProps = (state) => ({
-//   products: state.products.items,
-// });
-
-// const mapDispatchToProps = (dispatch)=>({fetchProducts:()=>dispatch(fetchProducts())})
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(Products);
+export default Products;
