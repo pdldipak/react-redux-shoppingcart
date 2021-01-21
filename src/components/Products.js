@@ -103,7 +103,7 @@ function Products({ products, addToCart }) {
 }
 
 export default connect(
-  (state) => ({ products: state.products.items }),
+  (state) => ({ products: state.products.filteredItems }),
   fetchProducts
 )(Products);
 
