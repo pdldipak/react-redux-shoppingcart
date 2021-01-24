@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import Fade from 'react-reveal/Fade';
+import { useSelector, useDispatch } from 'react-redux';
 import formatCurrency from '../util';
 import './cart.css';
+import { removeFromCart } from '../redux/actions/cartAction';
 
-function Cart({ cartItems, removeFromCart, createOrder }) {
+function Cart({ createOrder }) {
   //console.log('cartItems-', cartItems);
   const [showCheckout, setShowCheckout] = useState(false);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
+
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.cartItems);
 
   const handleOrder = (e) => {
     e.preventDefault();
@@ -26,7 +31,7 @@ function Cart({ cartItems, removeFromCart, createOrder }) {
         <div className='cart cart-header'>Cart is empty</div>
       ) : (
         <div className='cart cart-header'>
-          You have {cartItems.length} in the cart{' '}
+          You have {cartItems.length} in the cart.
         </div>
       )}
       <div className='cart'>
@@ -43,7 +48,7 @@ function Cart({ cartItems, removeFromCart, createOrder }) {
                     {formatCurrency(item.price)} x {item.count}{' '}
                     <button
                       className='button'
-                      onClick={() => removeFromCart(item)}
+                      onClick={() => dispatch(removeFromCart(item))}
                     >
                       Remove
                     </button>
