@@ -13,17 +13,16 @@ import { orderReducer } from './reducers/orderReducer';
 const initialState = {};
 
 const composeEnhancer =
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const middlewareList = [thunk, logger];
 const enhancer = composeEnhancer(applyMiddleware(...middlewareList));
 
 const store = createStore(
   combineReducers({
     products: productsReducer,
-    cart: cartReducer, 
-    order:orderReducer,
-
+    cart: cartReducer,
+    order: orderReducer,
   }),
   initialState,
   enhancer
@@ -35,7 +34,6 @@ export default store;
 // import thunk from "redux-thunk";
 // import { productsReducer } from "./reducers/productReducers";
 
-
 // const initialState = {};
 // const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // const store = createStore(
@@ -46,4 +44,3 @@ export default store;
 //   composeEnhancer(applyMiddleware(thunk))
 // );
 // export default store;
-
