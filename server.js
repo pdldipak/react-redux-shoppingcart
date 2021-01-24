@@ -12,8 +12,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-//conect to mongoDB
-mongoose.connect(process.env.DATABASE, {
+//to render static file inside build folder 
+app.use('/', express.static(__dirname + '/build'));
+app.get('/', (req, res) =>
+  res.sendFile(__dirname + '/build/index.html')
+);
+
+//connect to mongoDB
+mongoose.connect(process.env.MONGODB_URL || process.env.DATABASE, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: true,
