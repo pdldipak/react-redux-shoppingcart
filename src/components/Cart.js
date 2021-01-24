@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
-import Fade from 'react-reveal/Fade';
+import { Fade, Zoom } from 'react-reveal';
+import Modal from 'react-modal';
+import Moment from 'react-moment';
 import { useSelector, useDispatch } from 'react-redux';
 import formatCurrency from '../util';
 import './cart.css';
 import { removeFromCart } from '../redux/actions/cartAction';
+import {
+  createOrder,
+  clearOrder,
+} from '../redux/actions/orderAction';
 
-function Cart({ createOrder }) {
+function Cart() {
   //console.log('cartItems-', cartItems);
   const [showCheckout, setShowCheckout] = useState(false);
   const [email, setEmail] = useState('');
@@ -14,6 +20,7 @@ function Cart({ createOrder }) {
 
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const order = useSelector((state) => state.order.order);
 
   const handleOrder = (e) => {
     e.preventDefault();
@@ -22,8 +29,12 @@ function Cart({ createOrder }) {
       email: email,
       address: address,
       cartItems: cartItems,
+      total: cartItems.reduce((a, c) => a + c.price * c.count, 0),
     };
-    createOrder(order);
+    dispatch(createOrder(order));
+  };
+  const closeModal = () => {
+    dispatch(clearOrder());
   };
   return (
     <div>
@@ -33,6 +44,58 @@ function Cart({ createOrder }) {
         <div className='cart cart-header'>
           You have {cartItems.length} in the cart.
         </div>
+      )}
+
+      {order && (
+        <Modal isOpen={true} onRequestClose={closeModal}>
+          <Zoom>
+            <button className='close-modal' onClick={closeModal}>
+              x
+            </button>
+            <div className='order-details'>
+              <h3 className='success-message'>
+                Your order has been placed.
+              </h3>
+              <h2>Order {order._id}</h2>
+              <ul>
+                <li>
+                  <div>Name:</div>
+                  <div>{order.name}</div>
+                </li>
+                <li>
+                  <div>Email:</div>
+                  <div>{order.email}</div>
+                </li>
+                <li>
+                  <div>Address:</div>
+                  <div>{order.address}</div>
+                </li>
+                <li>
+                  <div>Date:</div>
+                  <div>
+                    <Moment>
+                      {order.createdAt}
+                    </Moment>
+                  </div>
+                </li>
+                <li>
+                  <div>Total:</div>
+                  <div>{formatCurrency(order.total)}</div>
+                </li>
+                <li>
+                  <div>Cart Items:</div>
+                  <div>
+                    {order.cartItems.map((x) => (
+                      <div>
+                        {x.count} {' x '} {x.title}
+                      </div>
+                    ))}
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </Zoom>
+        </Modal>
       )}
       <div className='cart'>
         <Fade left cascade={true}>
