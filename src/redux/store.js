@@ -7,6 +7,7 @@ import {
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { productsReducer } from './reducers/productReducers';
+import { cartReducer } from './reducers/cartReducer';
 
 const initialState = {};
 
@@ -19,6 +20,8 @@ const enhancer = composeEnhancer(applyMiddleware(...middlewareList));
 const store = createStore(
   combineReducers({
     products: productsReducer,
+    cart:cartReducer
+
   }),
   initialState,
   enhancer

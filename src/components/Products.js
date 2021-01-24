@@ -5,8 +5,9 @@ import formatCurrency from '../util';
 import './products.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts } from '../redux/actions/productAction';
+import { addToCart } from '../redux/actions/cartAction';
 
-function Products({ addToCart }) {
+function Products() {
   const [product, setProduct] = useState(null);
   const products = useSelector(
     (state) => state.products.filteredItems
@@ -15,7 +16,7 @@ function Products({ addToCart }) {
 
   useEffect(() => {
     dispatch(fetchProducts());
-  }, []);
+  }, [dispatch]);
 
   const openModal = (product) => {
     setProduct(product);
@@ -49,7 +50,7 @@ function Products({ addToCart }) {
                     <div>{formatCurrency(product.price)}</div>
                     <button
                       className='button-primary'
-                      onClick={() => addToCart(product)}
+                      onClick={() => dispatch(addToCart(product))}
                     >
                       Add To Cart
                     </button>
@@ -87,7 +88,7 @@ function Products({ addToCart }) {
                   <button
                     className='button primary'
                     onClick={() => {
-                      addToCart(product);
+                      dispatch(addToCart(product));
                       closeModal();
                     }}
                   >
