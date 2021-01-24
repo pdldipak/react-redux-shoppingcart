@@ -1,6 +1,6 @@
 {
   "name": "react-redux-ecommerce",
-  "proxy":"http://localhost:5000",
+  "proxy": "http://localhost:5000",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,11 +11,13 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "moment": "^2.29.1",
     "mongoose": "^5.11.12",
     "nodemon": "^2.0.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-modal": "^3.12.1",
+    "react-moment": "^1.1.1",
     "react-redux": "^7.2.2",
     "react-reveal": "^1.2.2",
     "react-scripts": "4.0.1",
